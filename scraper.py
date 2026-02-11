@@ -153,7 +153,165 @@ class PlanszeoScraper:
             print(f"      An error occurred while getting BGG stats: {e}")
         return {'bgg_rating': None, 'bgg_rank': None}
 
-    def send_email(self, subject, body):
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+import re
+import time
+import os
+import json
+from datetime import datetime
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
+
+class PlanszeoScraper:
+    def __init__(self):
+        self.session = requests.Session()
+        self.session.headers.update({
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        })
+        self.data_dir = 'data'
+        os.makedirs(self.data_dir, exist_ok=True)
+        self.history_file = os.path.join(self.data_dir, 'game_history.json')
+        self.game_history = {}
+
+    def scrape_ranking_page(self, page_num):
+        """Scraps a single page of the Planszeo ranking."""
+        url = f"https://planszeo.pl/top-listy/ranking?page={page_num}"
+        print(f"📄 Scraping page {page_num}: {url}")
+
+        try:
+            resp = self.session.get(url)
+            resp.raise_for_status()
+        except requests.exceptions.RequestException as e:
+            print(f"  Error fetching page {page_num}: {e}")
+            return []
+
+        soup = BeautifulSoup(resp.text, 'lxml')
+        games = []
+        
+        game_items = soup.find_all('div', class_='flex relative flex-col gap-3 py-3 mx-auto mb-3 bg-white rounded-xl border shadow-sm transition-shadow border-bronze-200 hover:shadow-md lg:my-1')
+        print(f"  📊 Found {len(game_items)} potential game items.")
+
+        for item in game_items:
+            try:
+                # Extract Rank
+                rank_tag = item.find('div', class_='text-base font-bold text-gray-700 lg:text-sm')
+                rank = int(rank_tag.get_text(strip=True).split('.')[0]) if rank_tag else 0
+
+                # Extract Game Name and URL
+                name_div = item.find('div', class_='text-lg font-bold text-center text-gray-800 transition-colors group-hover:text-purple-600 lg:text-left')
+                name = "N/A"
+                game_url = None
+                if name_div:
+                    name = name_div.get_text(strip=True)
+                    name_link_tag = name_div.find_parent('a')
+                    if name_link_tag and 'href' in name_link_tag.attrs:
+                        game_url = "https://planszeo.pl" + name_link_tag['href']
+
+                games.append({
+                    'miejsce': rank,
+                    'nazwa': name,
+                    'planszeo_url': game_url,
+                })
+            except Exception as e:
+                print(f"  Error parsing an item: {e}")
+                continue
+        
+        return games
+
+    def get_planszeo_game_details(self, planszeo_url):
+        """Extracts price, status, and Planszeo rating from an individual Planszeo game page."""
+        if not planszeo_url:
+            return {'cena': 0.0, 'status': 'N/A', 'planszeo_rating': None, 'bgg_url': None} # Added bgg_url to return
+
+        print(f"    🛒 Visiting {planszeo_url} for price, status and Planszeo rating...")
+        try:
+            resp = self.session.get(planszeo_url, timeout=10)
+            resp.raise_for_status()
+            soup = BeautifulSoup(resp.text, 'lxml')
+
+            # Extract Price
+            price = 0.0
+            price_div = soup.find('div', class_='text-purple-500 font-extrabold text-lg lg:text-2xl mt-4')
+            if price_div:
+                price_str = price_div.get_text(strip=True).replace('zł', '').replace(',', '.').strip()
+                price = float(price_str) if price_str and price_str != '-' else 0.0
+
+            # Extract Planszeo Rating
+            planszeo_rating = None
+            rating_span = soup.find('span', class_='inline-flex items-center rounded-md bg-green-600/20 px-2 py-1 text-lg lg:text-xl font-bold text-green-600 ring-1 ring-inset ring-green-600/50')
+            if rating_span:
+                planszeo_rating = float(rating_span.get_text(strip=True))
+
+            # Extract Status
+            status = "N/A"
+            # Using the new selector provided by the user
+            status_div = soup.find('div', class_='text-green-600 text-xs flex flex-row px-0.5 items-center')
+            if status_div:
+                status_span = status_div.find('span', class_='ml-0.5 font-bold')
+                if status_span:
+                    status = status_span.get_text(strip=True)
+            
+            # Extract BGG Link from Planszeo game page
+            bgg_link = None
+            bgg_a = soup.find('a', href=re.compile(r'boardgamegeek.com/boardgame/'))
+            if bgg_a and 'href' in bgg_a.attrs:
+                bgg_link = bgg_a['href']
+            
+            return {'cena': price, 'status': status, 'planszeo_rating': planszeo_rating, 'bgg_url': bgg_link}
+
+        except requests.exceptions.RequestException as e:
+            print(f"      Could not fetch Planszeo game details: {e}")
+        except Exception as e:
+            print(f"      An error occurred while getting Planszeo game details: {e}")
+        return {'cena': 0.0, 'status': 'N/A', 'planszeo_rating': None, 'bgg_url': None}
+
+    def get_bgg_stats(self, bgg_url):
+        """Gets rating and rank from a BGG page by scraping the embedded JSON data."""
+        if not bgg_url:
+            return {'bgg_rating': None, 'bgg_rank': None}
+
+        print(f"    🎲 Visiting {bgg_url} for stats...")
+        try:
+            resp = self.session.get(bgg_url, timeout=15)
+            resp.raise_for_status()
+
+            # Find the JSON data embedded in the script tag
+            match = re.search(r'GEEK\.geekitemPreload = (\{.*?\});', resp.text, re.DOTALL)
+            if not match:
+                print("      Could not find GEEK.geekitemPreload in the page.")
+                return {'bgg_rating': None, 'bgg_rank': None}
+
+            data = json.loads(match.group(1))
+            item_data = data.get('item', {})
+
+            # Extract rating
+            rating = item_data.get('stats', {}).get('average')
+
+            # Extract rank
+            rank = None
+            rank_info = item_data.get('rankinfo', [])
+            for r in rank_info:
+                if r.get('prettyname') == 'Board Game Rank':
+                    rank_value = r.get('rank')
+                    if rank_value and rank_value.isdigit():
+                        rank = int(rank_value)
+                    break
+            
+            return {'bgg_rating': rating, 'bgg_rank': rank}
+        except requests.exceptions.RequestException as e:
+            print(f"      Could not fetch BGG page: {e}")
+        except json.JSONDecodeError as e:
+            print(f"      Could not decode JSON from BGG page: {e}")
+        except Exception as e:
+            print(f"      An error occurred while getting BGG stats: {e}")
+        return {'bgg_rating': None, 'bgg_rank': None}
+
+    def send_email(self, subject, body, csv_path=None): # Added csv_path parameter
         """Sends email notifications using environment variables for credentials."""
         sender_email = os.environ.get('EMAIL_SENDER')
         app_password = os.environ.get('EMAIL_APP_PASSWORD')
@@ -167,12 +325,30 @@ class PlanszeoScraper:
             print(f"---------------------------\n")
             return
 
-        msg = MIMEText(body)
+        # Create a multipart message and set headers
+        msg = MIMEMultipart()
         msg['Subject'] = subject
         msg['From'] = sender_email
         msg['To'] = receiver_email
+        msg.attach(MIMEText(body, 'plain')) # Attach body
+
+        # Attach CSV file if provided
+        if csv_path and os.path.exists(csv_path):
+            try:
+                with open(csv_path, 'rb') as attachment:
+                    part = MIMEBase('application', 'octet-stream')
+                    part.set_payload(attachment.read())
+                encoders.encode_base64(part)
+                part.add_header(
+                    'Content-Disposition',
+                    f"attachment; filename= {os.path.basename(csv_path)}",
+                )
+                msg.attach(part)
+            except Exception as e:
+                print(f"Error attaching CSV file {csv_path}: {e}")
 
         try:
+            # Connect to SMTP server
             with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp: # Use SMTP_SSL for port 465
                 smtp.login(sender_email, app_password)
                 smtp.send_message(msg)
@@ -268,23 +444,25 @@ class PlanszeoScraper:
             
             time.sleep(1.2) # Be extra respectful to BGG API
 
-        # Send email alerts if any changes were detected
-        all_alerts = price_drop_alerts + availability_alerts
-        if all_alerts:
-            subject = "Planszeo.pl - Board Game Alerts!"
-            body = "\n\n".join(all_alerts)
-            self.send_email(subject, body)
-        else:
-            print("\n🔔 No significant changes detected today.")
-
-        # Save updated history
-        self.save_history(self.game_history)
-
+        # Generate CSV file first
         df = pd.DataFrame(all_games)
-        
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         csv_file = os.path.join(self.data_dir, f'planszeo_ranking_{timestamp}.csv')
         df.to_csv(csv_file, index=False, encoding='utf-8-sig')
+
+        # Send email alerts if any changes were detected
+        all_alerts = price_drop_alerts + availability_alerts
+        subject = "Planszeo.pl - Board Game Alerts!"
+        if all_alerts:
+            body = "\n\n".join(all_alerts)
+        else:
+            body = "🔔 No significant changes detected today."
+        
+        # Always send email for testing, with CSV attachment
+        self.send_email(subject, body, csv_file) # Pass csv_file here
+
+        # Save updated history
+        self.save_history(self.game_history)
 
         print(f"\n✅ Scraping complete. Data saved to: {csv_file}")
         print("\n📊 First 10 results:")
@@ -294,5 +472,4 @@ if __name__ == "__main__":
     scraper = PlanszeoScraper()
     # For testing, we scrape only 1 page as requested.
     # To scrape all 20 pages, change max_pages to 20.
-    scraper.run_scraper(max_pages=1)
-
+    scraper.run_scraper(max_pages=20)
