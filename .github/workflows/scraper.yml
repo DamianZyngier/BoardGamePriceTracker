@@ -1,30 +1,41 @@
-name: Planszeo Price Tracker
+name: Daily Planszeo Scraper
+
 on:
   schedule:
-    - cron: '0 6 * * *'  # Codziennie o 6:00 UTC (7:00 CET)
-  workflow_dispatch:  # Manual trigger
+    # Runs every day at 00:00 UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
+
+    env:
+      EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+      EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
+
     steps:
-      - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x' # Use the latest Python 3 version
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
-      - name: Run scraper
-        run: python scraper.py
+    - name: Run scraper
+      run: python scraper.py
 
-      - name: Commit results
-        run: |
-          git config user.name "Planszeo Bot"
-          git config user.email "damian.zyngier@gmail.com"
-          git add data/
-          git commit -m "Update prices: $(date)" || echo "No changes"
-          git push
+    - name: Commit and push changes
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add data/game_history.json
+        git add data/*.csv
+        git commit -m "Automated: Update game data and history" || echo "No changes to commit"
+        git push || echo "No changes to push"
