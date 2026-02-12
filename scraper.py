@@ -402,13 +402,18 @@ class PlanszeoScraper:
             # Check for price drop
             if old_price is not None and current_price is not None and old_price > 0:
                 price_change = (old_price - current_price) / old_price
-                if price_change >= 0.20: # 20% price drop
+                if price_change >= 0.1: # 20% price drop
                     alert_message = (
                         f"📈 Price Drop Alert for {game_name}!\n"
+                        f"Rank: {game['miejsce']}\n"
+                        f"Planszeo Rating: {game['planszeo_rating']}\n"
+                        f"BGG Rating: {game['bgg_rating']}\n"
+                        f"BGG Rank: {game['bgg_rank']}\n"
                         f"Previous Price: {old_price:.2f} zł\n"
                         f"Current Price: {current_price:.2f} zł\n"
                         f"Drop: {price_change:.2%}\n"
-                        f"Link: {game['planszeo_url']}"
+                        f"Planszeo Link: {game['planszeo_url']}\n"
+                        f"BGG Link: {game['bgg_url']}"
                     )
                     price_drop_alerts.append(alert_message)
             
@@ -452,14 +457,12 @@ class PlanszeoScraper:
 
         # Send email alerts if any changes were detected
         all_alerts = price_drop_alerts + availability_alerts
-        subject = "Planszeo.pl - Board Game Alerts!"
         if all_alerts:
+            subject = "Planszeo.pl - Board Game Price/Availability Alerts!"
             body = "\n\n".join(all_alerts)
+            self.send_email(subject, body, csv_file) # Pass csv_file here
         else:
-            body = "🔔 No significant changes detected today."
-        
-        # Always send email for testing, with CSV attachment
-        self.send_email(subject, body, csv_file) # Pass csv_file here
+            print("No significant price or availability changes detected. Email not sent.")
 
         # Save updated history
         self.save_history(self.game_history)
