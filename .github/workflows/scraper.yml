@@ -9,6 +9,8 @@ on:
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     env:
       EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
