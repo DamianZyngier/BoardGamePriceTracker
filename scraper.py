@@ -164,7 +164,7 @@ class PlanszeoScraper:
         with open(self.last_checked_game_file, 'w', encoding='utf-8') as f:
             f.write(game_name)
     
-    def run_scraper(self, max_pages=2):
+    def run_scraper(self, max_pages=5):
         logging.info("🏆 Starting Planszeo Deals Scraper...")
         all_games = []
         last_checked_game = self.get_last_checked_game()
