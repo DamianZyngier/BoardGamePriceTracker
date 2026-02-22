@@ -2,15 +2,13 @@ name: Daily Planszeo Scraper
 
 on:
   schedule:
-    # Runs every day at 00:00 UTC
-    - cron: '0 0 * * *'
+    # Runs every 6 hours, starting at 8 AM UTC
+    - cron: '0 8,14,20,2 * * *'
   workflow_dispatch: # Allows manual triggering
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     env:
       EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
@@ -25,6 +23,14 @@ jobs:
       with:
         python-version: '3.x' # Use the latest Python 3 version
 
+    - name: Cache data directory
+      uses: actions/cache@v3
+      with:
+        path: data
+        key: ${{ runner.os }}-data-${{ github.run_id }}
+        restore-keys: |
+          ${{ runner.os }}-data-
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -32,12 +38,3 @@ jobs:
 
     - name: Run scraper
       run: python scraper.py
-
-    - name: Commit and push changes
-      run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git add data/game_history.json
-
-        git commit -m "Automated: Update game data and history" || echo "No changes to commit"
-        git push || echo "No changes to push"
