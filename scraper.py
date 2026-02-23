@@ -196,6 +196,7 @@ class PlanszeoScraper:
             return
 
         # Use the first (newest) game's URL as the new last_checked_game
+        logging.info(f"💾 Saving new last checked game: {all_games[0]['nazwa']} ({all_games[0]['planszeo_url']})")
         self.save_last_checked_game(all_games[0]['planszeo_url'])
         
         logging.info(f"\n⭐ Scraping detailed information for {len(all_games)} new games...")
