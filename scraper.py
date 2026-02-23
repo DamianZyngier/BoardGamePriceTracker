@@ -160,36 +160,45 @@ class PlanszeoScraper:
                 return f.read().strip()
         return None
 
-    def save_last_checked_game(self, game_name):
+    def save_last_checked_game(self, game_url):
         with open(self.last_checked_game_file, 'w', encoding='utf-8') as f:
-            f.write(game_name)
+            f.write(game_url)
     
-    def run_scraper(self, max_pages=5):
+    def run_scraper(self, max_pages=10):
         logging.info("🏆 Starting Planszeo Deals Scraper...")
         all_games = []
-        last_checked_game = self.get_last_checked_game()
+        last_checked_url = self.get_last_checked_game()
+        logging.info(f"🔍 Last checked game URL: {last_checked_url}")
         
+        found_last_checked = False
         for page in range(1, max_pages + 1):
             games_on_page = self.scrape_deals_page(page)
             if not games_on_page:
                 break
             
-            if last_checked_game:
-                game_names_on_page = [g['nazwa'] for g in games_on_page]
-                if last_checked_game in game_names_on_page:
-                    all_games.extend(games_on_page[:game_names_on_page.index(last_checked_game)])
+            if last_checked_url:
+                game_urls_on_page = [g['planszeo_url'] for g in games_on_page]
+                if last_checked_url in game_urls_on_page:
+                    index = game_urls_on_page.index(last_checked_url)
+                    all_games.extend(games_on_page[:index])
+                    logging.info(f"🎯 Found last checked game on page {page} at index {index}. Stopping.")
+                    found_last_checked = True
                     break 
             
             all_games.extend(games_on_page)
             time.sleep(1)
 
+        if last_checked_url and not found_last_checked:
+            logging.warning(f"⚠️ Last checked game URL '{last_checked_url}' not found in the first {max_pages} pages. Scraping all games in these pages.")
+
         if not all_games:
             logging.info("No new games found.")
             return
 
-        self.save_last_checked_game(all_games[0]['nazwa'])
+        # Use the first (newest) game's URL as the new last_checked_game
+        self.save_last_checked_game(all_games[0]['planszeo_url'])
         
-        logging.info("\n⭐ Scraping detailed information for each game...")
+        logging.info(f"\n⭐ Scraping detailed information for {len(all_games)} new games...")
         for i, game in enumerate(all_games):
             logging.info(f"  ({i+1}/{len(all_games)}) Processing: {game['nazwa']}")
 
