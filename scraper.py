@@ -167,8 +167,8 @@ class PlanszeoScraper:
     def run_scraper(self, max_pages=10):
         logging.info("🏆 Starting Planszeo Deals Scraper...")
         all_games = []
-        last_checked_url = self.get_last_checked_game()
-        logging.info(f"🔍 Last checked game URL: {last_checked_url}")
+        last_checked_val = self.get_last_checked_game()
+        logging.info(f"🔍 Last checked game identifier: {last_checked_val}")
         
         found_last_checked = False
         for page in range(1, max_pages + 1):
@@ -176,20 +176,25 @@ class PlanszeoScraper:
             if not games_on_page:
                 break
             
-            if last_checked_url:
-                game_urls_on_page = [g['planszeo_url'] for g in games_on_page]
-                if last_checked_url in game_urls_on_page:
-                    index = game_urls_on_page.index(last_checked_url)
-                    all_games.extend(games_on_page[:index])
-                    logging.info(f"🎯 Found last checked game on page {page} at index {index}. Stopping.")
+            if last_checked_val:
+                # Find the index of the last checked game (by URL or by name)
+                found_idx = -1
+                for i, g in enumerate(games_on_page):
+                    if g['planszeo_url'] == last_checked_val or g['nazwa'] == last_checked_val:
+                        found_idx = i
+                        break
+                
+                if found_idx != -1:
+                    all_games.extend(games_on_page[:found_idx])
+                    logging.info(f"🎯 Found last checked game '{last_checked_val}' on page {page} at index {found_idx}. Stopping.")
                     found_last_checked = True
                     break 
             
             all_games.extend(games_on_page)
             time.sleep(1)
 
-        if last_checked_url and not found_last_checked:
-            logging.warning(f"⚠️ Last checked game URL '{last_checked_url}' not found in the first {max_pages} pages. Scraping all games in these pages.")
+        if last_checked_val and not found_last_checked:
+            logging.warning(f"⚠️ Last checked game '{last_checked_val}' not found in the first {max_pages} pages. Scraping all games in these pages.")
 
         if not all_games:
             logging.info("No new games found.")
