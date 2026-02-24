@@ -12,6 +12,10 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
 import logging
+from dotenv import load_dotenv
+import xml.etree.ElementTree as ET
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -21,6 +25,7 @@ class PlanszeoScraper:
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         })
+        self.bgg_api_token = os.environ.get('BGG_API_TOKEN')
         self.data_dir = 'data'
         os.makedirs(self.data_dir, exist_ok=True)
         self.history_file = os.path.join(self.data_dir, 'game_history.json')
@@ -124,9 +129,66 @@ class PlanszeoScraper:
         return {'bgg_url': None, 'planszeo_rank': None, 'planszeo_rating': None, 'planszeo_rating_count': None}
 
     def get_bgg_stats(self, bgg_url):
-        """Gets rating and rank from a BGG page by scraping the embedded JSON data."""
-        # This function is commented out as direct scraping of BGG is blocked by Cloudflare
-        # and API key was not provided.
+        """Gets rating and rank from BGG using the XML API2."""
+        if not bgg_url:
+            return None
+        
+        match = re.search(r'/boardgame/(\d+)', bgg_url)
+        if not match:
+            return None
+        
+        bgg_id = match.group(1)
+        api_url = f"https://boardgamegeek.com/xmlapi2/thing?id={bgg_id}&stats=1"
+        logging.info(f"    🎲 Fetching BGG stats for ID {bgg_id}...")
+        
+        max_retries = 2
+        for attempt in range(max_retries + 1):
+            try:
+                headers = {}
+                if self.bgg_api_token:
+                    headers['Authorization'] = f"Bearer {self.bgg_api_token}"
+                    
+                resp = self.session.get(api_url, headers=headers, timeout=10)
+                resp.raise_for_status()
+                
+                if resp.status_code == 202:
+                    if attempt < max_retries:
+                        logging.warning(f"      BGG processing (202), retrying in 3s... (Attempt {attempt+1}/{max_retries})")
+                        time.sleep(3)
+                        continue
+                    else:
+                        return None
+
+                root = ET.fromstring(resp.content)
+                item = root.find('item')
+                if item is None:
+                    return None
+                
+                stats_node = item.find('statistics')
+                if stats_node is None: return None
+                ratings_node = stats_node.find('ratings')
+                if ratings_node is None: return None
+                
+                rating = ratings_node.find('average').get('value')
+                
+                bgg_rank = None
+                ranks_node = ratings_node.find('ranks')
+                if ranks_node is not None:
+                    ranks = ranks_node.findall('rank')
+                    for r in ranks:
+                        if r.get('name') == 'boardgame':
+                            rank_val = r.get('value')
+                            if rank_val and rank_val.isdigit():
+                                bgg_rank = int(rank_val)
+                            break
+                
+                return {
+                    'bgg_rating': float(rating) if rating else None,
+                    'bgg_rank': bgg_rank
+                }
+            except Exception as e:
+                logging.error(f"      Error fetching BGG stats: {e}")
+                return None
         return None
 
     def send_email(self, subject, body):
@@ -236,27 +298,27 @@ class PlanszeoScraper:
             planszeo_details = self.get_planszeo_game_details(game['planszeo_url'])
             game.update(planszeo_details)
 
-            # bgg_stats = self.get_bgg_stats(game.get('bgg_url'))
-            # if bgg_stats:
-            #     game.update(bgg_stats)
-            #
-            #     if (bgg_stats.get('bgg_rank') and bgg_stats.get('bgg_rank') >= 300) or \
-            #        (bgg_stats.get('bgg_rating') and bgg_stats.get('bgg_rating') > 7.5):
-            #         subject = f"Planszeo Deal Alert: {game['nazwa']}"
-            #         body = (
-            #             f"Game: {game['nazwa']}\n"
-            #             f"Price: {game['cena']:.2f} zł\n"
-            #             f"Discount: {game['obnizka']}\n"
-            #             f"Type: {game['typ']}\n"
-            #             f"BGG Rating: {bgg_stats.get('bgg_rating')}\n"
-            #             f"BGG Rank: {bgg_stats.get('bgg_rank')}\n"
-            #             f"Planszeo Link: {game.get('planszeo_url')}\n"
-            #             f"BGG Link: {game.get('bgg_url')}"
-            #         )
-            #         self.send_email(subject, body)
+            bgg_stats = self.get_bgg_stats(game.get('bgg_url'))
+            if bgg_stats:
+                game.update(bgg_stats)
+            
+                if (bgg_stats.get('bgg_rank') and bgg_stats.get('bgg_rank') <= 200) or \
+                   (bgg_stats.get('bgg_rating') and bgg_stats.get('bgg_rating') > 8.0):
+                    subject = f"Planszeo Deal Alert: {game['nazwa']}"
+                    body = (
+                        f"Game: {game['nazwa']}\n"
+                        f"Price: {game['cena']:.2f} zł\n"
+                        f"Discount: {game['obnizka']}\n"
+                        f"Type: {game['typ']}\n"
+                        f"BGG Rating: {bgg_stats.get('bgg_rating')}\n"
+                        f"BGG Rank: {bgg_stats.get('bgg_rank')}\n"
+                        f"Planszeo Link: {game.get('planszeo_url')}\n"
+                        f"BGG Link: {game.get('bgg_url')}"
+                    )
+                    self.send_email(subject, body)
 
-            if (game.get('planszeo_rating') and game.get('planszeo_rating') > 4.0 and game.get('planszeo_rating_count') and game.get('planszeo_rating_count') >= 10) or \
-               (game.get('planszeo_rank') and game.get('planszeo_rank') <= 200):
+            elif (game.get('planszeo_rating') and game.get('planszeo_rating') > 4.5 and game.get('planszeo_rating_count') and game.get('planszeo_rating_count') >= 50) or \
+               (game.get('planszeo_rank') and game.get('planszeo_rank') <= 150):
                 subject = f"Planszeo Deal Alert: {game['nazwa']}"
                 body = (
                     f"Game: {game['nazwa']}\n"
@@ -280,7 +342,10 @@ class PlanszeoScraper:
         logging.info(f"\n✅ Scraping complete. Data saved to: {csv_file}")
         
         if not df.empty:
-            logging.info("\n--- SCRAPED DATA ---\n" + df[['nazwa', 'cena', 'obnizka', 'typ', 'planszeo_url', 'planszeo_rank', 'planszeo_rating', 'planszeo_rating_count']].to_string())
+            cols_to_show = ['nazwa', 'cena', 'obnizka', 'planszeo_rank', 'planszeo_rating', 'bgg_rank', 'bgg_rating']
+            # Filter columns that actually exist in the dataframe to avoid errors
+            existing_cols = [c for c in cols_to_show if c in df.columns]
+            logging.info("\n--- SCRAPED DATA ---\n" + df[existing_cols].to_string())
 
 if __name__ == "__main__":
     scraper = PlanszeoScraper()
