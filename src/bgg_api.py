@@ -4,21 +4,25 @@ import time
 import re
 from typing import Optional, Dict, Any
 
-from src.config import Config
+from src.config import Config, settings
 from src.logger import setup_logger
+from src.models import BggStats
 
 logger = setup_logger(__name__)
 
 class BggApi:
     def __init__(self, session: requests.Session):
         self.session = session
+        self.headers = settings.headers.copy()
+        if Config.BGG_API_TOKEN:
+            self.headers['Authorization'] = f"Bearer {Config.BGG_API_TOKEN}"
 
-    def get_stats(self, bgg_url: str) -> Optional[Dict[str, Any]]:
+    def get_stats(self, bgg_url: str) -> Optional[BggStats]:
         """Gets rating and rank from BGG using the XML API2."""
         if not bgg_url:
             return None
         
-        match = re.search(r'/boardgame/(\d+)', bgg_url)
+        match = re.search(r'/boardgame/(\d+)', str(bgg_url))
         if not match:
             return None
         
@@ -29,11 +33,7 @@ class BggApi:
         max_retries = 2
         for attempt in range(max_retries + 1):
             try:
-                headers = {}
-                if Config.BGG_API_TOKEN:
-                    headers['Authorization'] = f"Bearer {Config.BGG_API_TOKEN}"
-                    
-                resp = self.session.get(api_url, headers=headers, timeout=10)
+                resp = self.session.get(api_url, headers=self.headers, timeout=10)
                 resp.raise_for_status()
                 
                 if resp.status_code == 202:
@@ -67,10 +67,10 @@ class BggApi:
                                 bgg_rank = int(rank_val)
                             break
                 
-                return {
-                    'bgg_rating': float(rating) if rating else None,
-                    'bgg_rank': bgg_rank
-                }
+                return BggStats(
+                    bgg_rating=float(rating) if rating else None,
+                    bgg_rank=bgg_rank
+                )
             except Exception as e:
                 logger.error(f"      Error fetching BGG stats: {e}")
                 return None

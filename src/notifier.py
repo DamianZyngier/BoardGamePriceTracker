@@ -1,17 +1,18 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from typing import Optional
 
-from src.config import Config
+from src.config import settings
 from src.logger import setup_logger
 
 logger = setup_logger(__name__)
 
 class EmailNotifier:
     def __init__(self):
-        self.sender = Config.EMAIL_SENDER
-        self.password = Config.EMAIL_APP_PASSWORD
-        self.receiver = Config.EMAIL_RECEIVER
+        self.sender = settings.EMAIL_SENDER
+        self.password = settings.EMAIL_APP_PASSWORD.get_secret_value() if settings.EMAIL_APP_PASSWORD else None
+        self.receiver = settings.EMAIL_RECEIVER
 
     def send(self, subject: str, body: str):
         """Sends an email notification."""
