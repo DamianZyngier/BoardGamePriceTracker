@@ -1,8 +1,9 @@
+import os
 import requests
 import time
 import pandas as pd
 from datetime import datetime
-from typing import List, Set
+from typing import List, Set, Tuple
 
 from src.config import settings
 from src.logger import setup_logger
@@ -38,27 +39,29 @@ class BoardGameTracker:
         if not deals: return
         data = [{'planszeo_url': str(g.planszeo_url), 'nazwa': g.nazwa} for g in deals[:5]]
         save_json(settings.last_checked_file, data)
+        logger.info("💾 Updated last checked games.")
 
     def run(self, max_pages: int = 10):
         logger.info("🏆 Starting BoardGamePriceTracker...")
         
-        new_deals = self._scrape_new_deals(max_pages)
+        new_deals, first_page_deals = self._scrape_new_deals(max_pages)
         if not new_deals:
             logger.info("No new deals found.")
+            # Still update last checked if we found something on page 1
+            if first_page_deals:
+                self._save_last_checked(first_page_deals)
             return
 
-        # Save the very first deals found on page 1 as the new "last checked" state
-        # (Assuming they are sorted by newest)
-        # Note: new_deals contains all new ones across pages. 
-        # We should ideally save the top of page 1.
-        
         processed_games = self._process_deals(new_deals)
         self._export_results(processed_games)
+        
+        # Save the very first deals found on page 1 as the new "last checked" state
+        if first_page_deals:
+            self._save_last_checked(first_page_deals)
 
-    def _scrape_new_deals(self, max_pages: int) -> List[PlanszeoDeal]:
+    def _scrape_new_deals(self, max_pages: int) -> Tuple[List[PlanszeoDeal], List[PlanszeoDeal]]:
         all_new_deals = []
         first_page_deals = []
-        found_last_checked = False
 
         for page in range(1, max_pages + 1):
             deals_on_page = self.scraper.get_deals(page)
@@ -77,16 +80,12 @@ class BoardGameTracker:
             if found_idx != -1:
                 all_new_deals.extend(deals_on_page[:found_idx])
                 logger.info(f"🎯 Found a previously checked game on page {page}. Stopping.")
-                found_last_checked = True
                 break 
             
             all_new_deals.extend(deals_on_page)
             time.sleep(1)
 
-        if first_page_deals:
-            self._save_last_checked(first_page_deals)
-
-        return all_new_deals
+        return all_new_deals, first_page_deals
 
     def _process_deals(self, deals: List[PlanszeoDeal]) -> List[GameDetails]:
         logger.info(f"\n⭐ Processing {len(deals)} new deals...")

@@ -1,7 +1,9 @@
 from typing import Optional
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel, HttpUrl, ConfigDict
 
 class PlanszeoDeal(BaseModel):
+    model_config = ConfigDict(validate_assignment=True)
+    
     nazwa: str
     cena: float
     obnizka: str
@@ -13,6 +15,8 @@ class PlanszeoDeal(BaseModel):
     bgg_url: Optional[HttpUrl] = None
 
 class BggStats(BaseModel):
+    model_config = ConfigDict(validate_assignment=True)
+    
     bgg_rating: Optional[float] = None
     bgg_rank: Optional[int] = None
 
