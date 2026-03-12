@@ -9,7 +9,11 @@ class Settings(BaseSettings):
     BGG_API_TOKEN: SecretStr = Field(default=..., description="BGG Personal Access Token for API v2")
     EMAIL_SENDER: Optional[str] = Field(default=None, description="Gmail address for sending alerts")
     EMAIL_APP_PASSWORD: Optional[SecretStr] = Field(default=None, description="App Password for Gmail")
-    EMAIL_RECEIVER: str = Field(default='zyngi23@gmail.com')
+    EMAIL_RECEIVER: Optional[str] = Field(default=None)
+    
+    @property
+    def receiver(self) -> str:
+        return self.EMAIL_RECEIVER or self.EMAIL_SENDER or 'zyngi23@gmail.com'
     
     DATA_DIR: str = 'data'
     PLANSZEO_BASE_URL: str = "https://planszeo.pl"
@@ -38,7 +42,7 @@ class Config:
     BGG_API_TOKEN = settings.BGG_API_TOKEN.get_secret_value() if settings.BGG_API_TOKEN else None
     EMAIL_SENDER = settings.EMAIL_SENDER
     EMAIL_APP_PASSWORD = settings.EMAIL_APP_PASSWORD.get_secret_value() if settings.EMAIL_APP_PASSWORD else None
-    EMAIL_RECEIVER = settings.EMAIL_RECEIVER
+    EMAIL_RECEIVER = settings.receiver
     DATA_DIR = settings.DATA_DIR
     HISTORY_FILE = settings.history_file
     LAST_CHECKED_FILE = settings.last_checked_file
