@@ -71,7 +71,7 @@ def generate_html(
     
     <div class="info-section">
         <p><strong>🔗 Link do okazji:</strong> <a href="{settings.PLANSZEO_DEALS_URL}" target="_blank">Planszeo Okazje</a></p>
-        <p><strong>🕒 Ostatnie sprawdzenie (GitHub Action):</strong> {last_run}</p>
+        <p><strong>🕒 Ostatnie sprawdzenie (Warszawa):</strong> {last_run}</p>
         <p><strong>🔥 Ostatnio znalezione nowe okazje:</strong> {last_new_deals_date}</p>
     </div>
 

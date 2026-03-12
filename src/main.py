@@ -3,6 +3,7 @@ import requests
 import time
 import pandas as pd
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from typing import List, Set, Tuple
 
 from src.config import settings
@@ -54,7 +55,7 @@ class BoardGameTracker:
     def run(self, max_pages: int = 10):
         logger.info("🏆 Starting BoardGamePriceTracker...")
         
-        now = datetime.now()
+        now = datetime.now(ZoneInfo("Europe/Warsaw"))
         stats = load_json(self.stats_file)
         if not isinstance(stats, dict):
             stats = {
@@ -193,7 +194,7 @@ class BoardGameTracker:
         if not games: return
         
         df = pd.DataFrame([g.model_dump() for g in games])
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        timestamp = datetime.now(ZoneInfo("Europe/Warsaw")).strftime('%Y%m%d_%H%M%S')
         csv_file = os.path.join(settings.DATA_DIR, f'planszeo_deals_{timestamp}.csv')
         os.makedirs(settings.DATA_DIR, exist_ok=True)
         
