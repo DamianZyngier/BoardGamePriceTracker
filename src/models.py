@@ -22,4 +22,4 @@ class BggStats(BaseModel):
 
 class GameDetails(PlanszeoDeal, BggStats):
     """Combined model for a game with both Planszeo and BGG data."""
-    pass
+    passed_threshold: bool = False

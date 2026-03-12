@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoardGamePriceTracker - Status</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; line-height: 1.6; color: #333; }
+        h1 { color: #2c3e50; }
+        .info-section { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #dee2e6; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background: #e9ecef; text-align: left; padding: 10px; }
+        td { padding: 10px; border-bottom: 1px solid #dee2e6; }
+        .alert { background-color: #d4edda; font-weight: bold; }
+        .threshold-info { font-size: 0.9em; color: #666; font-style: italic; }
+        a { color: #007bff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>BoardGamePriceTracker</h1>
+    
+    <div class="info-section">
+        <p><strong>🔗 Link do okazji:</strong> <a href="https://planszeo.pl/okazje" target="_blank">Planszeo Okazje</a></p>
+        <p><strong>🕒 Ostatnie sprawdzenie (GitHub Action):</strong> 2026-03-12 19:44:44</p>
+        <p><strong>🔥 Ostatnio znalezione nowe okazje:</strong> Never</p>
+    </div>
+
+    <div class="info-section">
+        <h3>🔔 Progi powiadomień e-mail:</h3>
+        <pre class="threshold-info">- BGG Rank <= 200
+- BGG Rating > 8.0
+- Planszeo Rank <= 150
+- Planszeo Rating > 4.5 AND Rating Count >= 50</pre>
+    </div>
+
+    <h2>🆕 Ostatnio znalezione nowe okazje:</h2>
+    <p>No new deals found in the last run.</p>
+
+    <footer style="margin-top: 40px; font-size: 0.8em; color: #999;">
+        Generowane automatycznie przez GitHub Actions.
+    </footer>
+</body>
+</html>

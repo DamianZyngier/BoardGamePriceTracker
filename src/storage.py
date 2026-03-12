@@ -7,7 +7,7 @@ from src.logger import setup_logger
 
 logger = setup_logger(__name__)
 
-def load_json(file_path: str) -> List[Dict[str, Any]]:
+def load_json(file_path: str) -> Any:
     """Loads a JSON file, returning an empty list if it doesn't exist or is invalid."""
     if not os.path.exists(file_path):
         return []
@@ -21,7 +21,7 @@ def load_json(file_path: str) -> List[Dict[str, Any]]:
         logger.error(f"Unexpected error reading {file_path}: {e}")
         return []
 
-def save_json(file_path: str, data: List[Dict[str, Any]]):
+def save_json(file_path: str, data: Any):
     """Saves data to a JSON file."""
     try:
         os.makedirs(os.path.dirname(file_path), exist_ok=True)

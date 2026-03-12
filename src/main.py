@@ -12,8 +12,16 @@ from src.bgg_api import BggApi
 from src.notifier import EmailNotifier
 from src.storage import load_json, save_json
 from src.models import PlanszeoDeal, GameDetails
+from src.page_generator import generate_html, save_page
 
 logger = setup_logger()
+
+NOTIFICATION_THRESHOLDS = (
+    "- BGG Rank <= 200\n"
+    "- BGG Rating > 8.0\n"
+    "- Planszeo Rank <= 150\n"
+    "- Planszeo Rating > 4.5 AND Rating Count >= 50"
+)
 
 class BoardGameTracker:
     def __init__(self):
@@ -25,13 +33,15 @@ class BoardGameTracker:
         self.notifier = EmailNotifier()
         
         self.last_checked_identifiers: Set[str] = self._load_last_checked()
+        self.stats_file = os.path.join(settings.DATA_DIR, 'stats.json')
 
     def _load_last_checked(self) -> Set[str]:
         last_checked_games = load_json(settings.last_checked_file)
         identifiers = set()
         for g in last_checked_games:
-            if g.get('planszeo_url'): identifiers.add(str(g['planszeo_url']))
-            if g.get('nazwa'): identifiers.add(g['nazwa'])
+            if isinstance(g, dict):
+                if g.get('planszeo_url'): identifiers.add(str(g['planszeo_url']))
+                if g.get('nazwa'): identifiers.add(g['nazwa'])
         logger.info(f"🔍 Loaded {len(identifiers)} last checked identifiers.")
         return identifiers
 
@@ -44,20 +54,48 @@ class BoardGameTracker:
     def run(self, max_pages: int = 10):
         logger.info("🏆 Starting BoardGamePriceTracker...")
         
+        now = datetime.now()
+        stats = load_json(self.stats_file)
+        if not isinstance(stats, dict):
+            stats = {
+                "last_run": "Never",
+                "last_new_deals_date": "Never",
+                "last_deals": []
+            }
+
+        stats["last_run"] = now.strftime('%Y-%m-%d %H:%M:%S')
+        
         new_deals, first_page_deals = self._scrape_new_deals(max_pages)
-        if not new_deals:
+        
+        processed_games = []
+        if new_deals:
+            processed_games = self._process_deals(new_deals)
+            self._export_results(processed_games)
+            
+            stats["last_new_deals_date"] = stats["last_run"]
+            stats["last_deals"] = [g.model_dump(mode='json') for g in processed_games]
+            
+            # Save the very first deals found on page 1 as the new "last checked" state
+            if first_page_deals:
+                self._save_last_checked(first_page_deals)
+        else:
             logger.info("No new deals found.")
             # Still update last checked if we found something on page 1
             if first_page_deals:
                 self._save_last_checked(first_page_deals)
-            return
 
-        processed_games = self._process_deals(new_deals)
-        self._export_results(processed_games)
+        # Update stats file
+        save_json(self.stats_file, stats)
         
-        # Save the very first deals found on page 1 as the new "last checked" state
-        if first_page_deals:
-            self._save_last_checked(first_page_deals)
+        # Generate GitHub Pages
+        html = generate_html(
+            last_run=stats["last_run"],
+            last_new_deals_date=stats["last_new_deals_date"],
+            thresholds=NOTIFICATION_THRESHOLDS,
+            deals=stats["last_deals"]
+        )
+        save_page(html)
+        logger.info("🌐 GitHub Pages site generated in docs/index.html")
 
     def _scrape_new_deals(self, max_pages: int) -> Tuple[List[PlanszeoDeal], List[PlanszeoDeal]]:
         all_new_deals = []
@@ -137,6 +175,7 @@ class BoardGameTracker:
                 should_notify = True
                 criteria += f"- Planszeo High Rating: {game.planszeo_rating} ({game.planszeo_rating_count} votes)\n"
 
+        game.passed_threshold = should_notify
         if should_notify:
             body = (
                 f"Game: {game.nazwa}\n"
