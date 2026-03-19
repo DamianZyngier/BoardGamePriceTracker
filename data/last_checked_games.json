@@ -1,5 +1,9 @@
 [
   {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/jekyll-vs-hyde/oferty",
+    "nazwa": "Jekyll i Hyde"
+  },
+  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/po-prostu-p/oferty",
     "nazwa": "Po prostu P"
   },
@@ -14,9 +18,5 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/hitster-edycja-specjalna/oferty",
     "nazwa": "Hitster: Edycja specjalna"
-  },
-  {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/uptown/oferty",
-    "nazwa": "Uptown"
   }
 ]
