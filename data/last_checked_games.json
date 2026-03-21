@@ -4,10 +4,6 @@
     "nazwa": "Jekyll i Hyde"
   },
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/po-prostu-p/oferty",
-    "nazwa": "Po prostu P"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/wiedzmin-stary-swiat/oferty",
     "nazwa": "Wiedźmin: Stary Świat"
   },
@@ -16,7 +12,11 @@
     "nazwa": "Szachy Ojca Mateusza"
   },
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/hitster-edycja-specjalna/oferty",
-    "nazwa": "Hitster: Edycja specjalna"
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/uptown/oferty",
+    "nazwa": "Uptown"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/wampira-maskarady-chicago-po-zmroku/oferty",
+    "nazwa": "Wampir: Maskarada - Chicago po zmroku"
   }
 ]
