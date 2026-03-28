@@ -8,15 +8,15 @@
     "nazwa": "Uptown"
   },
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/flow/oferty",
-    "nazwa": "Flow"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/montmartre/oferty",
     "nazwa": "Montmartre"
   },
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/wampir-maskarada-druga-inkwizycja/oferty",
     "nazwa": "Wampir: Maskarada - Druga inkwizycja"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/kimono/oferty",
+    "nazwa": "Kimono"
   }
 ]
