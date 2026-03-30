@@ -68,6 +68,10 @@ def generate_html(
             """
         deals_html += "</tbody></table>"
 
+    notification_html = last_notification_date
+    if last_notification_date != "Nigdy":
+        notification_html = f'{last_notification_date} - <a href="{last_notification_url}" target="_blank">{last_notification_game}</a>'
+
     html_template = f"""<!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -94,7 +98,7 @@ def generate_html(
         <p><strong>🔗 Link do okazji:</strong> <a href="{settings.PLANSZEO_DEALS_URL}" target="_blank">Planszeo Okazje</a></p>
         <p><strong>🕒 Ostatnie sprawdzenie:</strong> {last_run}</p>
         <p><strong>🔥 Ostatnio znalezione nowe okazje:</strong> {last_new_deals_date}</p>
-        <p><strong>🔔 Ostatnia notyfikacja:</strong> {last_notification_date} - <a href="{last_notification_url}" target="_blank">{last_notification_game}</a></p>
+        <p><strong>🔔 Ostatnia notyfikacja:</strong> {notification_html}</p>
     </div>
 
     <div class="info-section">

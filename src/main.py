@@ -59,9 +59,9 @@ class BoardGameTracker:
         stats = load_json(self.stats_file)
         if not isinstance(stats, dict):
             stats = {
-                "last_run": "Never",
-                "last_new_deals_date": "Never",
-                "last_notification_date": "Never",
+                "last_run": "Nigdy",
+                "last_new_deals_date": "Nigdy",
+                "last_notification_date": "Nigdy",
                 "last_notification_game": "N/A",
                 "last_notification_url": "#",
                 "last_deals": []
@@ -102,8 +102,8 @@ class BoardGameTracker:
         # Generate GitHub Pages
         html = generate_html(
             last_run=stats["last_run"],
-            last_new_deals_date=stats["last_new_deals_date"],
-            last_notification_date=stats.get("last_notification_date", "Never"),
+            last_new_deals_date=stats.get("last_new_deals_date", "Nigdy"),
+            last_notification_date=stats.get("last_notification_date", "Nigdy"),
             last_notification_game=stats.get("last_notification_game", "N/A"),
             last_notification_url=stats.get("last_notification_url", "#"),
             thresholds=NOTIFICATION_THRESHOLDS,
