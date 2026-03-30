@@ -34,7 +34,6 @@ def generate_html(
             <thead>
                 <tr>
                     <th>Nazwa</th>
-                    <th>Nazwa (BGG)</th>
                     <th>Cena (zł)</th>
                     <th>Obniżka</th>
                     <th>Planszeo Rank</th>
@@ -53,13 +52,16 @@ def generate_html(
             obnizka = d.get('obnizka', '0%')
             cena_info = " (po obniżce)" if obnizka != "0%" else ""
             
-            bgg_name = d.get('original_name') or d.get('nazwa', 'N/A')
-            bgg_link = f'<a href="{d.get("bgg_url", "#")}" target="_blank">{bgg_name}</a>' if d.get('bgg_url') else bgg_name
+            bgg_link_tag = ""
+            if d.get('bgg_url'):
+                bgg_link_tag = f'<br><small><a href="{d.get("bgg_url")}" target="_blank">(BGG)</a></small>'
 
             deals_html += f"""
                 <tr class="{alert_class}">
-                    <td><a href="{d.get('planszeo_url', '#')}" target="_blank">{d.get('nazwa', 'N/A')}</a></td>
-                    <td>{bgg_link}</td>
+                    <td>
+                        <a href="{d.get('planszeo_url', '#')}" target="_blank">{d.get('nazwa', 'N/A')}</a>
+                        {bgg_link_tag}
+                    </td>
                     <td>{format_pl(d.get('cena', 0))}{cena_info}</td>
                     <td>{d.get('obnizka', '0%')}</td>
                     <td>{d.get('planszeo_rank', 'N/A')}</td>
