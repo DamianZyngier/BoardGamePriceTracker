@@ -19,6 +19,7 @@ class BggStats(BaseModel):
     
     bgg_rating: Optional[float] = None
     bgg_rank: Optional[int] = None
+    original_name: Optional[str] = None
 
 class GameDetails(PlanszeoDeal, BggStats):
     """Combined model for a game with both Planszeo and BGG data."""

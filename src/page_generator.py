@@ -6,11 +6,25 @@ from src.config import settings
 def generate_html(
     last_run: str,
     last_new_deals_date: str,
+    last_notification_date: str,
+    last_notification_game: str,
+    last_notification_url: str,
     thresholds: str,
     deals: List[Dict[str, Any]]
 ) -> str:
     """Generates the static index.html content."""
     
+    def format_pl(val: Any) -> str:
+        """Formats a number using a comma as the decimal separator."""
+        if val is None or val == "N/A":
+            return "N/A"
+        try:
+            if isinstance(val, (int, float)):
+                return f"{val:.2f}".replace('.', ',')
+            return str(val).replace('.', ',')
+        except:
+            return str(val)
+
     deals_html = ""
     if not deals:
         deals_html = "<p>No new deals found in the last run.</p>"
@@ -20,6 +34,7 @@ def generate_html(
             <thead>
                 <tr>
                     <th>Nazwa</th>
+                    <th>Nazwa (BGG)</th>
                     <th>Cena (zł)</th>
                     <th>Obniżka</th>
                     <th>Planszeo Rank</th>
@@ -34,14 +49,22 @@ def generate_html(
             alert_class = "alert" if d.get('passed_threshold', False) else ""
             alert_text = "YES" if d.get('passed_threshold', False) else "NO"
             
+            # Cena - info czy po obniżce
+            obnizka = d.get('obnizka', '0%')
+            cena_info = " (po obniżce)" if obnizka != "0%" else ""
+            
+            bgg_name = d.get('original_name') or d.get('nazwa', 'N/A')
+            bgg_link = f'<a href="{d.get("bgg_url", "#")}" target="_blank">{bgg_name}</a>' if d.get('bgg_url') else bgg_name
+
             deals_html += f"""
                 <tr class="{alert_class}">
                     <td><a href="{d.get('planszeo_url', '#')}" target="_blank">{d.get('nazwa', 'N/A')}</a></td>
-                    <td>{d.get('cena', 0):.2f}</td>
+                    <td>{bgg_link}</td>
+                    <td>{format_pl(d.get('cena', 0))}{cena_info}</td>
                     <td>{d.get('obnizka', '0%')}</td>
                     <td>{d.get('planszeo_rank', 'N/A')}</td>
                     <td>{d.get('bgg_rank', 'N/A')}</td>
-                    <td>{d.get('bgg_rating', 'N/A')}</td>
+                    <td>{format_pl(d.get('bgg_rating', 'N/A'))}</td>
                     <td align="center"><strong>{alert_text}</strong></td>
                 </tr>
             """
@@ -71,8 +94,9 @@ def generate_html(
     
     <div class="info-section">
         <p><strong>🔗 Link do okazji:</strong> <a href="{settings.PLANSZEO_DEALS_URL}" target="_blank">Planszeo Okazje</a></p>
-        <p><strong>🕒 Ostatnie sprawdzenie (Warszawa):</strong> {last_run}</p>
+        <p><strong>🕒 Ostatnie sprawdzenie:</strong> {last_run}</p>
         <p><strong>🔥 Ostatnio znalezione nowe okazje:</strong> {last_new_deals_date}</p>
+        <p><strong>🔔 Ostatnia notyfikacja:</strong> {last_notification_date} - <a href="{last_notification_url}" target="_blank">{last_notification_game}</a></p>
     </div>
 
     <div class="info-section">

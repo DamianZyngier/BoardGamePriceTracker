@@ -61,6 +61,9 @@ class BoardGameTracker:
             stats = {
                 "last_run": "Never",
                 "last_new_deals_date": "Never",
+                "last_notification_date": "Never",
+                "last_notification_game": "N/A",
+                "last_notification_url": "#",
                 "last_deals": []
             }
 
@@ -75,6 +78,14 @@ class BoardGameTracker:
             
             stats["last_new_deals_date"] = stats["last_run"]
             stats["last_deals"] = [g.model_dump(mode='json') for g in processed_games]
+            
+            # Check for alerts and update last_notification stats
+            for game in processed_games:
+                if game.passed_threshold:
+                    stats["last_notification_date"] = stats["last_run"]
+                    stats["last_notification_game"] = game.nazwa
+                    stats["last_notification_url"] = str(game.planszeo_url)
+                    # We only store the latest notification info for the page
             
             # Save the very first deals found on page 1 as the new "last checked" state
             if first_page_deals:
@@ -92,6 +103,9 @@ class BoardGameTracker:
         html = generate_html(
             last_run=stats["last_run"],
             last_new_deals_date=stats["last_new_deals_date"],
+            last_notification_date=stats.get("last_notification_date", "Never"),
+            last_notification_game=stats.get("last_notification_game", "N/A"),
+            last_notification_url=stats.get("last_notification_url", "#"),
             thresholds=NOTIFICATION_THRESHOLDS,
             deals=stats["last_deals"]
         )

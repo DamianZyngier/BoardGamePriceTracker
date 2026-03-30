@@ -56,6 +56,13 @@ class BggApi:
                 
                 rating = ratings_node.find('average').get('value')
                 
+                # Extract primary name
+                original_name = None
+                for n in item.findall('name'):
+                    if n.get('type') == 'primary':
+                        original_name = n.get('value')
+                        break
+
                 bgg_rank = None
                 ranks_node = ratings_node.find('ranks')
                 if ranks_node is not None:
@@ -69,7 +76,8 @@ class BggApi:
                 
                 return BggStats(
                     bgg_rating=float(rating) if rating else None,
-                    bgg_rank=bgg_rank
+                    bgg_rank=bgg_rank,
+                    original_name=original_name
                 )
             except Exception as e:
                 logger.error(f"      Error fetching BGG stats: {e}")
