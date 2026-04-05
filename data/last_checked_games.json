@@ -1,9 +1,5 @@
 [
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/po-prostu-p/oferty",
-    "nazwa": "Po prostu P"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/rush-hour-deluxe/oferty",
     "nazwa": "Rush Hour: Deluxe Edition"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/monster-mash-96205039-5c91-47b1-acd1-b89a24c2fb92/oferty",
     "nazwa": "Monster Mash"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/for-a-crown/oferty",
+    "nazwa": "Korona władzy"
   }
 ]
