@@ -8,15 +8,15 @@
     "nazwa": "Apex Legends: Gra planszowa"
   },
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/night-knight/oferty",
-    "nazwa": "Bitwa na poduchy"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/trivial-pursuit-rick-and-morty-edycja-polska/oferty",
     "nazwa": "Trivial Pursuit: Rick and Morty"
   },
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/potion-house/oferty",
     "nazwa": "Ale kocioł!"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/wizard-kittens/oferty",
+    "nazwa": "Czarujące kotki"
   }
 ]
