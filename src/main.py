@@ -192,6 +192,7 @@ class BoardGameTracker:
 
         game.passed_threshold = should_notify
         if should_notify:
+            logger.info(f"🔔 Notification threshold passed for: {game.nazwa}")
             body = (
                 f"Game: {game.nazwa}\n"
                 f"Price: {game.cena:.2f} zł\n"
@@ -202,7 +203,11 @@ class BoardGameTracker:
                 f"- Planszeo: {game.planszeo_url}\n"
                 f"- BGG: {game.bgg_url or 'N/A'}"
             )
-            self.notifier.send(subject, body)
+            success = self.notifier.send(subject, body)
+            if success:
+                logger.info(f"📩 Notification sent for {game.nazwa}")
+            else:
+                logger.warning(f"⚠️ Failed to send notification for {game.nazwa}")
 
     def _export_results(self, games: List[GameDetails]):
         if not games: return
