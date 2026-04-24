@@ -1,9 +1,5 @@
 [
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/kostki-bystrzaka-zwierzeta/oferty",
-    "nazwa": "Kostki bystrzaka: Zwierzęta"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/cien-wladcy-demonow-karty-demona-zestaw-i/oferty",
     "nazwa": "Cień Władcy Demonów: Karty demona - Zestaw I"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/w-glowie-sie-nie-miesci-2-gra-o-emocjach/oferty",
     "nazwa": "W głowie się nie mieści 2: Gra o emocjach"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/eleven-nieprzewidziane-wydarzenia/oferty",
+    "nazwa": "Eleven: Nieprzewidziane Wydarzenia"
   }
 ]
