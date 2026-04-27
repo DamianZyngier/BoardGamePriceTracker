@@ -1,9 +1,5 @@
 [
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/spiace-krolewny-2-na-ratunek/oferty",
-    "nazwa": "Śpiące Królewny 2: Na ratunek!"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/zoo-new-york/oferty",
     "nazwa": "Zoo New York"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/nasza-relacja-inspirujaco-i-angazujaco/oferty",
     "nazwa": "Nasza relacja: Inspirująco i angażująco"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/emocje-nasze-rozmowy/oferty",
+    "nazwa": "EMOCJE: Nasze rozmowy"
   }
 ]
