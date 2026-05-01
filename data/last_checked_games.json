@@ -1,9 +1,5 @@
 [
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/robinson-crusoe-przygoda-na-przekletej-wyspie/oferty",
-    "nazwa": "Robinson Crusoe: Przygoda na przeklętej wyspie"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/slowianie-mitologiczna-gra-fabularna-bestiariusz/oferty",
     "nazwa": "Słowianie: Mitologiczna gra fabularna - Bestiariusz"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/wsiasc-do-pociagu-europa-15-rocznica/oferty",
     "nazwa": "Wsiąść do pociągu: Europa 15. rocznica"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/zoo-new-york/oferty",
+    "nazwa": "Zoo New York"
   }
 ]
