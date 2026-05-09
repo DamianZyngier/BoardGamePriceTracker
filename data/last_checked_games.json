@@ -1,9 +1,5 @@
 [
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/na-barana/oferty",
-    "nazwa": "Na barana"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/coatl/oferty",
     "nazwa": "Coatl"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/suburbia-inc/oferty",
     "nazwa": "Suburbia: Rozszerzenia"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/flick-of-faith-cherry-blossom/oferty",
+    "nazwa": "Palec boży: Kwiat wiśni"
   }
 ]
