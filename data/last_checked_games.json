@@ -1,5 +1,9 @@
 [
   {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/midguard-archiwa-jotuni/oferty",
+    "nazwa": "MidGuard: Archiwa - Jotuni"
+  },
+  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/blitzkrieg-world-war-two-in-20-minutes/oferty",
     "nazwa": "Syndykat zbrodni"
   },
@@ -14,9 +18,5 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/diuna-przygody-w-imperium-wladcy-diuny/oferty",
     "nazwa": "Diuna: Przygody w Imperium - Władcy Diuny"
-  },
-  {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/tug/oferty",
-    "nazwa": "TUG!"
   }
 ]
