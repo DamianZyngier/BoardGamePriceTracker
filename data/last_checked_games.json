@@ -1,9 +1,5 @@
 [
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/roll-player-chochliki-i-chowance/oferty",
-    "nazwa": "Roll Player: Chochliki i Chowańce"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/smash-up/oferty",
     "nazwa": "Smash Up"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/wilkolak-apokalipsa/oferty",
     "nazwa": "Wilkołak: Apokalipsa"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/kostki-bystrzaka-zwierzeta/oferty",
+    "nazwa": "Kostki bystrzaka: Zwierzęta"
   }
 ]
