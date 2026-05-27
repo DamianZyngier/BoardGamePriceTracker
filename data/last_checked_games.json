@@ -4,10 +4,6 @@
     "nazwa": "Śpiące Królewny 2: Na ratunek!"
   },
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/labyrinth-8d0a5f93-42c7-4b70-b2f2-c11864d63cc2/oferty",
-    "nazwa": "Labyrinth: Pokemon"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/chwalebna-smierc/oferty",
     "nazwa": "Cień Władcy Demonów: Chwalebna śmierć"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/scrabble-junior/oferty",
     "nazwa": "Scrabble: Junior"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/star-wars-shatterpoint-zestaw-podstawowy/oferty",
+    "nazwa": "Star Wars: Shatterpoint - Zestaw podstawowy"
   }
 ]
