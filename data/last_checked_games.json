@@ -4,10 +4,6 @@
     "nazwa": "Othello"
   },
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/sagrada-pasja/oferty",
-    "nazwa": "Sagrada: Pasja"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/overboss-a-boss-monster-adventure/oferty",
     "nazwa": "Overboss"
   },
@@ -16,7 +12,11 @@
     "nazwa": "Rummikub Gdańsk"
   },
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/go-cuckoo-f4b95b80-72d6-4436-b9df-20cfef2ee9cb/oferty",
-    "nazwa": "Kuku na muniu!"
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/minecraft-builders-biomes-targ/oferty",
+    "nazwa": "Minecraft: Builders & Biomes - Targ"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/tytus-romek-i-a-tomek/oferty",
+    "nazwa": "Tytus, Romek i A‘Tomek"
   }
 ]
