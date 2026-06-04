@@ -1,9 +1,5 @@
 [
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/maui/oferty",
-    "nazwa": "Maui"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/spiace-krolewny-2-na-ratunek/oferty",
     "nazwa": "Śpiące Królewny 2: Na ratunek!"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/wilkolak-apokalipsa/oferty",
     "nazwa": "Wilkołak: Apokalipsa"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/spot-it-6641c302-d800-425d-9e3d-7e0d650dc247/oferty",
+    "nazwa": "Dobble: Super Mario"
   }
 ]
