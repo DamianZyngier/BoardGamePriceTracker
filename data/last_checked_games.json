@@ -1,9 +1,5 @@
 [
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/endless-winter-paleoamericans/oferty",
-    "nazwa": "Wieczna zima: Paleoamerykanie"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/tripol/oferty",
     "nazwa": "Tripol"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/armada-fregata-nebulon-b/oferty",
     "nazwa": "Star Wars: Armada - Fregata Nebulon-B"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/slup-ognia/oferty",
+    "nazwa": "Słup ognia"
   }
 ]
