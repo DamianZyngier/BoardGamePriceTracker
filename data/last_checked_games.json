@@ -1,5 +1,13 @@
 [
   {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/druzyna-do-zadan-specjalnych/oferty",
+    "nazwa": "Drużyna do zadań specjalnych"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/stamp-swap/oferty",
+    "nazwa": "Znaczkomania"
+  },
+  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/great-western-trail-el-paso/oferty",
     "nazwa": "Great Western Trail: El Paso"
   },
@@ -10,13 +18,5 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/harry-potter-hogwarts-battle/oferty",
     "nazwa": "Harry Potter: Hogwarts Battle"
-  },
-  {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/bim-bom/oferty",
-    "nazwa": "Bim Bom"
-  },
-  {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/mafia-96cec097-b9b6-45ec-ac72-9a3998f4e51d/oferty",
-    "nazwa": "Mafia"
   }
 ]
