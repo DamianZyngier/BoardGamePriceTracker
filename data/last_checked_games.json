@@ -1,9 +1,5 @@
 [
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/zalozysz-sie-party/oferty",
-    "nazwa": "Założysz się? Party"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/messina-1347/oferty",
     "nazwa": "Messina 1347"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/na-barana/oferty",
     "nazwa": "Na barana"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/endless-winter-paleoamericans/oferty",
+    "nazwa": "Wieczna zima: Paleoamerykanie"
   }
 ]
