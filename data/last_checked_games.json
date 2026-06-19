@@ -1,5 +1,9 @@
 [
   {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/harry-potter-hogwarts-battle/oferty",
+    "nazwa": "Harry Potter: Hogwarts Battle"
+  },
+  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/dobble-star-wars-mandalorian/oferty",
     "nazwa": "Dobble: Star Wars - Mandalorian"
   },
@@ -14,9 +18,5 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/world-of-tanks-battleground/oferty",
     "nazwa": "World of Tanks: Battlegrounds"
-  },
-  {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/concordia-gallia-corsica-expansion/oferty",
-    "nazwa": "Concordia: Gallia/Corsica"
   }
 ]
