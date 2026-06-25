@@ -1,9 +1,5 @@
 [
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/w-glowie-sie-nie-miesci-2-gra-o-emocjach/oferty",
-    "nazwa": "W głowie się nie mieści 2: Gra o emocjach"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/suplement-wladcy-demonow/oferty",
     "nazwa": "Cień Władcy Demonów: Suplement władcy demonów"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/dobble-disney-100-anniversary/oferty",
     "nazwa": "Dobble: Disney 100 Anniversary"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/minecraft-builders-biomes-targ/oferty",
+    "nazwa": "Minecraft: Builders & Biomes - Targ"
   }
 ]
