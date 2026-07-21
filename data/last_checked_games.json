@@ -1,5 +1,13 @@
 [
   {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/uptown/oferty",
+    "nazwa": "Uptown"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/mini-market/oferty",
+    "nazwa": "Junior Game: Mini Market"
+  },
+  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/world-of-tanks-battleground/oferty",
     "nazwa": "World of Tanks: Battlegrounds"
   },
@@ -10,13 +18,5 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/lowca-porachunek/oferty",
     "nazwa": "Łowca: Porachunek"
-  },
-  {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/urban-panic/oferty",
-    "nazwa": "Urban Panic"
-  },
-  {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/mindbug/oferty",
-    "nazwa": "Mindbug"
   }
 ]
