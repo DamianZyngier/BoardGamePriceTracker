@@ -1,9 +1,5 @@
 [
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/gra-o-emocjach/oferty",
-    "nazwa": "Gra o emocjach"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/sky-team-turbulence/oferty",
     "nazwa": "Halo wieża: Turbulencje"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/attila/oferty",
     "nazwa": "Jednorożce: Pojedynek w chmurach"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/zakon-kranca-swiata/oferty",
+    "nazwa": "Enclave: Zakon Krańca Świata"
   }
 ]
