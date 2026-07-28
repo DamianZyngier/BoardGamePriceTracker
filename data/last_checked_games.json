@@ -1,5 +1,13 @@
 [
   {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/monopoly-junior-kosmos/oferty",
+    "nazwa": "Monopoly: Junior - Kosmos"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/next-station-london/oferty",
+    "nazwa": "Następna stacja: Londyn"
+  },
+  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/sky-team-turbulence/oferty",
     "nazwa": "Halo wieża: Turbulencje"
   },
@@ -10,13 +18,5 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/valeria-wyprawy/oferty",
     "nazwa": "Valeria: Wyprawy"
-  },
-  {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/attila/oferty",
-    "nazwa": "Jednorożce: Pojedynek w chmurach"
-  },
-  {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/zakon-kranca-swiata/oferty",
-    "nazwa": "Enclave: Zakon Krańca Świata"
   }
 ]
