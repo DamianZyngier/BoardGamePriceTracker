@@ -1,5 +1,9 @@
 [
   {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/monopoly-world-football-stars/oferty",
+    "nazwa": "Monopoly: World Football Stars"
+  },
+  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/widmo-nad-arkham/oferty",
     "nazwa": "Widmo nad Arkham"
   },
@@ -14,9 +18,5 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/sequence-harry-potter/oferty",
     "nazwa": "Sequence Harry Potter"
-  },
-  {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/monopoly-junior-kosmos/oferty",
-    "nazwa": "Monopoly: Junior - Kosmos"
   }
 ]
