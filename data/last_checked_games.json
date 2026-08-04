@@ -1,9 +1,5 @@
 [
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/windmill-valley/oferty",
-    "nazwa": "Wiatrakowo"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/wampir-maskarada-camarilla/oferty",
     "nazwa": "Wampir: Maskarada - Camarilla"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/mini-market/oferty",
     "nazwa": "Junior Game: Mini Market"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/pandemic-szybka-reakcja/oferty",
+    "nazwa": "Pandemic: Szybka reakcja"
   }
 ]
