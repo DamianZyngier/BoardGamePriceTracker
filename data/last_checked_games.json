@@ -12,11 +12,11 @@
     "nazwa": "Tekhenu: Czas Seta"
   },
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/huang/oferty",
-    "nazwa": "Huang"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/wampir-maskarada-camarilla/oferty",
     "nazwa": "Wampir: Maskarada - Camarilla"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/legend-of-the-five-rings-the-card-game-the-chrysanthemum-throne-dynasty-pack/oferty",
+    "nazwa": "Legenda Pięciu Kręgów: Gra karciana - Chryzantemowy tron (Cykl Cesarski)"
   }
 ]
