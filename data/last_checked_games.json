@@ -4,10 +4,6 @@
     "nazwa": "Fantastyczne fabryki"
   },
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/total-domination/oferty",
-    "nazwa": "Total Domination"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/tekhenu-czas-seta/oferty",
     "nazwa": "Tekhenu: Czas Seta"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/mini-market/oferty",
     "nazwa": "Junior Game: Mini Market"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/pandemic-szybka-reakcja/oferty",
+    "nazwa": "Pandemic: Szybka reakcja"
   }
 ]
