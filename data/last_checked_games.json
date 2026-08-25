@@ -1,5 +1,13 @@
 [
   {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/fallout-gra-fabularna-zestaw-startowy/oferty",
+    "nazwa": "Fallout: Gra fabularna - Zestaw startowy"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/fallout-gra-fabularna/oferty",
+    "nazwa": "Fallout: Gra fabularna"
+  },
+  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/korporacja/oferty",
     "nazwa": "Korporacja"
   },
@@ -10,13 +18,5 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/caesar-seize-rome-in-20-minutes/oferty",
     "nazwa": "Cezar"
-  },
-  {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/zalozysz-sie-party/oferty",
-    "nazwa": "Założysz się? Party"
-  },
-  {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/marvel-zombies-a-zombicide-game-fantastic-4-under-siege/oferty",
-    "nazwa": "Marvel Zombies: Fantastic 4 - Oblężenie"
   }
 ]
