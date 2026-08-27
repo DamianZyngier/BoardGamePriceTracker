@@ -4,10 +4,6 @@
     "nazwa": "Księga smoków"
   },
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/celestia/oferty",
-    "nazwa": "Celestia"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/fallout-gra-fabularna-zestaw-startowy/oferty",
     "nazwa": "Fallout: Gra fabularna - Zestaw startowy"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/korporacja/oferty",
     "nazwa": "Korporacja"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/ona-jest-10-na-10-ale/oferty",
+    "nazwa": "Ona jest 10 na 10, ale..."
   }
 ]
