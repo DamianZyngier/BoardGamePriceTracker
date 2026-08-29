@@ -4,10 +4,6 @@
     "nazwa": "Monopoly: Disney Lilo & Stitch"
   },
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/overboss-a-boss-monster-adventure/oferty",
-    "nazwa": "Overboss"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/urban-panic/oferty",
     "nazwa": "Urban Panic"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/fallout-gra-fabularna/oferty",
     "nazwa": "Fallout: Gra fabularna"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/korporacja/oferty",
+    "nazwa": "Korporacja"
   }
 ]
