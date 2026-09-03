@@ -1,5 +1,9 @@
 [
   {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/la-casa-de-papel-escape-game/oferty",
+    "nazwa": "Escape Game: Dom z papieru"
+  },
+  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/world-of-tanks-battleground/oferty",
     "nazwa": "World of Tanks: Battlegrounds"
   },
@@ -14,9 +18,5 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/frozen-2-home-sprint/oferty",
     "nazwa": "Frozen II: Home Sprint – Be the First Back Home!"
-  },
-  {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/the-breach/oferty",
-    "nazwa": "The Breach"
   }
 ]
