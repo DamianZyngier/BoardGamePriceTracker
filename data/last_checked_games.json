@@ -1,9 +1,5 @@
 [
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/cascadia-junior/oferty",
-    "nazwa": "Kaskadia Junior"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/builders-of-sylvan-dale/oferty",
     "nazwa": "Budowniczowie Sielskiej Doliny"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/wonderland-s-war-shards-of-madness/oferty",
     "nazwa": "Wojna w Krainie Czarów: Odłamki szaleństwa"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/river-of-gold/oferty",
+    "nazwa": "Rzeka Złota"
   }
 ]
