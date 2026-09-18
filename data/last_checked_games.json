@@ -1,9 +1,5 @@
 [
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/zaginiona-wyspa-arnak-krete-sciezki/oferty",
-    "nazwa": "Zaginiona wyspa Arnak: Kręte ścieżki"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/llamas-alpacas/oferty",
     "nazwa": "Lamy i alpaki"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/paper-world/oferty",
     "nazwa": "Paper World"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/ustaw-ziomka/oferty",
+    "nazwa": "Ustaw Ziomka"
   }
 ]
