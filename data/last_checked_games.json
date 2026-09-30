@@ -1,9 +1,5 @@
 [
   {
-    "planszeo_url": "https://planszeo.pl/gry-planszowe/worms-the-board-game/oferty",
-    "nazwa": "Worms: Gra planszowa"
-  },
-  {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/monopoly/oferty",
     "nazwa": "Monopoly"
   },
@@ -18,5 +14,9 @@
   {
     "planszeo_url": "https://planszeo.pl/gry-planszowe/dice-city/oferty",
     "nazwa": "Dice City"
+  },
+  {
+    "planszeo_url": "https://planszeo.pl/gry-planszowe/hide-peek-friends/oferty",
+    "nazwa": "Chowajka zaglądajka"
   }
 ]
